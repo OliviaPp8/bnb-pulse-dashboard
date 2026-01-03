@@ -145,3 +145,70 @@ export const bestYieldCombination = {
   protocol: 'Lista slisBNB + Launchpool',
   apr: 12.5,
 };
+
+// Institutional Holdings
+export interface InstitutionalHolding {
+  ticker: string;
+  company: string;
+  holdings: number;
+  costBasis: number;
+  currentPrice: number;
+  mNavPremium: number;
+}
+
+export interface SovereignNode {
+  region: string;
+  regionKey: string;
+  status: 'active' | 'inactive';
+  lastSeen: string;
+}
+
+export interface SovereignData {
+  lockPercentage: number;
+  totalLocked: number;
+}
+
+export const mockInstitutionalHoldings: InstitutionalHolding[] = [
+  {
+    ticker: '$BNC',
+    company: 'CEA Industries',
+    holdings: 47_500,
+    costBasis: 851,
+    currentPrice: 710,
+    mNavPremium: 2.1,
+  },
+  {
+    ticker: '$NA',
+    company: 'Nano Labs',
+    holdings: 32_100,
+    costBasis: 580,
+    currentPrice: 710,
+    mNavPremium: 1.8,
+  },
+];
+
+export const mockSovereignNodes: SovereignNode[] = [
+  {
+    region: 'Abu Dhabi',
+    regionKey: 'abuDhabi',
+    status: 'active',
+    lastSeen: '2025-01-02T12:00:00Z',
+  },
+  {
+    region: 'Singapore',
+    regionKey: 'singapore',
+    status: 'active',
+    lastSeen: '2025-01-02T11:45:00Z',
+  },
+  {
+    region: 'Switzerland',
+    regionKey: 'switzerland',
+    status: 'inactive',
+    lastSeen: '2024-12-28T08:30:00Z',
+  },
+];
+
+export const mockSovereignData: SovereignData = {
+  lockPercentage: 4.2,
+  totalLocked: 5_754_000,
+};
