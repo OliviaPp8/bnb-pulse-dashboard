@@ -1,12 +1,47 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useCallback } from 'react';
+import { Header } from '@/components/Header';
+import { ThePulse } from '@/components/pulse';
+import { ExchangeCurve } from '@/components/exchange';
+import { ChainCurve } from '@/components/chain';
 
 const Index = () => {
+  const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = useCallback(() => {
+    setIsRefreshing(true);
+    // Simulate refresh delay - will be replaced with real API calls
+    setTimeout(() => {
+      setLastUpdated(new Date());
+      setIsRefreshing(false);
+    }, 1000);
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header 
+        onRefresh={handleRefresh} 
+        lastUpdated={lastUpdated} 
+        isRefreshing={isRefreshing} 
+      />
+      
+      <main className="container space-y-8 py-6">
+        {/* The Pulse - Core Vitals */}
+        <ThePulse />
+
+        {/* Exchange Curve - Yield Rankings */}
+        <ExchangeCurve />
+
+        {/* Chain Curve - On-chain Activity */}
+        <ChainCurve />
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-border py-6">
+        <div className="container text-center text-xs text-muted-foreground">
+          <p>BNB Alpha Terminal © 2025 | Data for informational purposes only</p>
+        </div>
+      </footer>
     </div>
   );
 };
