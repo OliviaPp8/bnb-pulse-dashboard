@@ -25,9 +25,7 @@ export function Header({ onRefresh, lastUpdated, isRefreshing }: HeaderProps) {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo & Title */}
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 overflow-hidden rounded-lg">
-            <img src={bnbLogo} alt="BNB" className="h-10 w-auto max-w-none" style={{ marginLeft: '-2px' }} />
-          </div>
+          <img src={bnbLogo} alt="BNB" className="h-10 w-10" />
           <div>
             <h1 className="text-lg font-bold text-foreground">{t('title')}</h1>
             <p className="text-xs text-muted-foreground">{t('subtitle')}</p>
