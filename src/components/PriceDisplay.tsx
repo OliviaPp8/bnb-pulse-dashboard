@@ -9,8 +9,8 @@ interface PriceData {
   low24h: number;
 }
 
-// BNB ATH was $793.35 on December 4, 2024
-const BNB_ATH = 793.35;
+// BNB ATH was $1375
+const BNB_ATH = 1375;
 
 export function PriceDisplay() {
   const [priceData, setPriceData] = useState<PriceData | null>(null);
