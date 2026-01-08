@@ -1,6 +1,7 @@
 import { useLanguage } from '@/i18n';
 import { Twitter, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { PriceDisplay } from '@/components/PriceDisplay';
 import bnbLogo from '@/assets/bnb-logo.png';
 
 interface HeaderProps {
@@ -26,11 +27,14 @@ export function Header({ onRefresh, lastUpdated, isRefreshing }: HeaderProps) {
         {/* Logo & Title */}
         <div className="flex items-center gap-3">
           <img src={bnbLogo} alt="BNB" className="h-10 w-10" />
-          <div>
+          <div className="hidden sm:block">
             <h1 className="text-lg font-bold text-foreground">{t('title')}</h1>
             <p className="text-xs text-muted-foreground">{t('subtitle')}</p>
           </div>
         </div>
+
+        {/* Price Display */}
+        <PriceDisplay />
 
         {/* Right Controls */}
         <div className="flex items-center gap-4">
