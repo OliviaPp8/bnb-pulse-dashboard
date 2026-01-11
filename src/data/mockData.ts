@@ -41,6 +41,13 @@ export interface LsdData {
   locked: number;
 }
 
+export interface LpLockData {
+  platform: string;
+  platformKey: string;
+  lockedValue: number;
+  lpPairs: number;
+}
+
 export interface AsterData {
   tradingVolume: number;
   actualHoldings: number;
@@ -140,6 +147,27 @@ export const mockAsterData: AsterData = {
   ratio: 1.61,
   isArbitrageOpen: true,
 };
+
+export const mockLpLockData: LpLockData[] = [
+  {
+    platform: 'PinkSale',
+    platformKey: 'pinkSale',
+    lockedValue: 890_000_000,
+    lpPairs: 12500,
+  },
+  {
+    platform: 'Unicrypt',
+    platformKey: 'unicrypt',
+    lockedValue: 650_000_000,
+    lpPairs: 8200,
+  },
+  {
+    platform: 'Team Finance',
+    platformKey: 'teamFinance',
+    lockedValue: 420_000_000,
+    lpPairs: 5600,
+  },
+];
 
 export const bestYieldCombination = {
   protocol: 'Lista slisBNB + Launchpool',

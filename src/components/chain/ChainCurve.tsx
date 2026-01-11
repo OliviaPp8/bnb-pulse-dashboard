@@ -1,8 +1,9 @@
 import { useLanguage } from '@/i18n';
 import { ActivityMonitor } from './ActivityMonitor';
 import { LsdLocking } from './LsdLocking';
+import { LpLocking } from './LpLocking';
 import { AsterIndex } from './AsterIndex';
-import { mockChainMetrics, mockLsdData, mockAsterData } from '@/data/mockData';
+import { mockChainMetrics, mockLsdData, mockAsterData, mockLpLockData } from '@/data/mockData';
 
 export function ChainCurve() {
   const { t } = useLanguage();
@@ -17,9 +18,10 @@ export function ChainCurve() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <ActivityMonitor data={mockChainMetrics} />
         <LsdLocking data={mockLsdData} />
+        <LpLocking data={mockLpLockData} />
         <AsterIndex data={mockAsterData} />
       </div>
     </section>
