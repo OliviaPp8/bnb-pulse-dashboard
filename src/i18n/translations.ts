@@ -75,6 +75,13 @@ export const translations = {
     listaDao: "Lista DAO",
     pancakeSwap: "PancakeSwap",
     
+    // LP Locking
+    lpLocking: "On-chain LP Locking",
+    totalLockedValue: "Total Locked Value",
+    pinkSale: "PinkSale",
+    unicrypt: "Unicrypt",
+    teamFinance: "Team Finance",
+
     // Aster Index
     asterIndex: "Aster Arbitrage Index",
     tradingVolume: "24h Trading Volume",
@@ -181,6 +188,13 @@ export const translations = {
     listaDao: "Lista DAO",
     pancakeSwap: "PancakeSwap",
     
+    // LP Locking
+    lpLocking: "链上LP锁仓",
+    totalLockedValue: "总锁仓价值",
+    pinkSale: "PinkSale",
+    unicrypt: "Unicrypt",
+    teamFinance: "Team Finance",
+
     // Aster Index
     asterIndex: "Aster 套利指数",
     tradingVolume: "24小时交易量",
