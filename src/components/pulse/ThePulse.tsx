@@ -18,7 +18,7 @@ export function ThePulse() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        <SupplyProgress data={mockSupplyData} />
+        <SupplyProgress />
         <DeflationClock data={mockBurnData} />
         <BestYield data={bestYieldCombination} />
       </div>
