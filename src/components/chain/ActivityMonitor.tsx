@@ -1,15 +1,12 @@
 import { useLanguage } from '@/i18n';
-import { ChainMetrics } from '@/data/mockData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Activity, Fuel, Users } from 'lucide-react';
+import { Activity, Fuel, Users, Loader2 } from 'lucide-react';
 import { TranslationKey } from '@/i18n/translations';
+import { useChainMetrics } from '@/hooks/useChainMetrics';
 
-interface ActivityMonitorProps {
-  data: ChainMetrics[];
-}
-
-export function ActivityMonitor({ data }: ActivityMonitorProps) {
+export function ActivityMonitor() {
   const { t } = useLanguage();
+  const { data, isLoading } = useChainMetrics();
 
   const formatNumber = (num: number) => {
     if (num >= 1_000_000) {
@@ -27,6 +24,7 @@ export function ActivityMonitor({ data }: ActivityMonitorProps) {
         <CardTitle className="flex items-center gap-2 text-base font-semibold">
           <Activity className="h-4 w-4 text-chart-blue" />
           {t('activityMonitor')}
+          {isLoading && <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
