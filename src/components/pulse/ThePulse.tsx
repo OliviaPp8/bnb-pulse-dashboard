@@ -2,7 +2,7 @@ import { useLanguage } from '@/i18n';
 import { SupplyProgress } from './SupplyProgress';
 import { DeflationClock } from './DeflationClock';
 import { BestYield } from './BestYield';
-import { mockSupplyData, mockBurnData, bestYieldCombination } from '@/data/mockData';
+import { bestYieldCombination } from '@/data/mockData';
 
 export function ThePulse() {
   const { t } = useLanguage();
@@ -19,7 +19,7 @@ export function ThePulse() {
 
       <div className="grid gap-4 md:grid-cols-3">
         <SupplyProgress />
-        <DeflationClock data={mockBurnData} />
+        <DeflationClock />
         <BestYield data={bestYieldCombination} />
       </div>
     </section>

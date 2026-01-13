@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/i18n';
-import { BurnData } from '@/data/mockData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Flame, Loader2 } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Flame, Loader2, TrendingDown } from 'lucide-react';
 import { useBep95Burn } from '@/hooks/useBep95Burn';
+import { useBurnInfo } from '@/hooks/useBurnInfo';
 
-interface DeflationClockProps {
-  data: BurnData;
-}
-
-export function DeflationClock({ data }: DeflationClockProps) {
+export function DeflationClock() {
   const { t } = useLanguage();
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const { burnRate, isLoading: isBurnLoading } = useBep95Burn();
+  const { nextBurnEstimatedAmount, currentBurnProgress, nextBurnDate, isLoading: isBurnInfoLoading } = useBurnInfo();
+  
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(nextBurnDate));
 
-  function calculateTimeLeft() {
-    const difference = data.nextBurnDate.getTime() - Date.now();
+  function calculateTimeLeft(targetDate: Date) {
+    const difference = targetDate.getTime() - Date.now();
     
     if (difference <= 0) {
       return { days: 0, hours: 0, minutes: 0, seconds: 0 };
@@ -31,17 +30,30 @@ export function DeflationClock({ data }: DeflationClockProps) {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      setTimeLeft(calculateTimeLeft(nextBurnDate));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [data.nextBurnDate]);
+  }, [nextBurnDate]);
+
+  const formatNumber = (num: number) => {
+    if (num >= 1_000_000) {
+      return `${(num / 1_000_000).toFixed(2)}M`;
+    }
+    if (num >= 1_000) {
+      return `${(num / 1_000).toFixed(0)}K`;
+    }
+    return num.toFixed(0);
+  };
 
   return (
     <Card className="card-glow">
       <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
+        <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
           {t('deflationClock')}
+          {(isBurnLoading || isBurnInfoLoading) && (
+            <Loader2 className="h-3 w-3 animate-spin" />
+          )}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -67,6 +79,26 @@ export function DeflationClock({ data }: DeflationClockProps) {
               </span>
             </div>
           ))}
+        </div>
+
+        {/* Estimated Burn Amount & Progress */}
+        <div className="space-y-2 rounded-lg bg-secondary/50 p-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <TrendingDown className="h-4 w-4 text-chart-yellow" />
+              <span className="text-xs text-muted-foreground">{t('estimatedBurnAmount')}</span>
+            </div>
+            <span className="font-mono text-sm font-bold text-chart-yellow">
+              {formatNumber(nextBurnEstimatedAmount)} BNB
+            </span>
+          </div>
+          <div className="space-y-1">
+            <div className="flex items-center justify-between text-[10px]">
+              <span className="text-muted-foreground">{t('quarterProgress')}</span>
+              <span className="font-mono text-foreground">{currentBurnProgress.toFixed(1)}%</span>
+            </div>
+            <Progress value={currentBurnProgress} className="h-1.5" />
+          </div>
         </div>
 
         {/* BEP-95 Burn Rate */}
