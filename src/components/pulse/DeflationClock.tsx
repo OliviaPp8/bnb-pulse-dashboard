@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from '@/i18n';
 import { BurnData } from '@/data/mockData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Flame } from 'lucide-react';
+import { Flame, Loader2 } from 'lucide-react';
+import { useBep95Burn } from '@/hooks/useBep95Burn';
 
 interface DeflationClockProps {
   data: BurnData;
@@ -11,6 +12,7 @@ interface DeflationClockProps {
 export function DeflationClock({ data }: DeflationClockProps) {
   const { t } = useLanguage();
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const { burnRate, isLoading: isBurnLoading } = useBep95Burn();
 
   function calculateTimeLeft() {
     const difference = data.nextBurnDate.getTime() - Date.now();
@@ -73,9 +75,13 @@ export function DeflationClock({ data }: DeflationClockProps) {
             <Flame className="h-4 w-4 animate-pulse-glow text-destructive" />
             <span className="text-xs text-muted-foreground">{t('bep95BurnRate')}</span>
           </div>
-          <span className="font-mono text-sm font-bold text-destructive">
-            {data.bep95BurnRate.toFixed(2)} BNB{t('perMinute')}
-          </span>
+          {isBurnLoading ? (
+            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+          ) : (
+            <span className="font-mono text-sm font-bold text-destructive">
+              {burnRate.toFixed(2)} BNB{t('perMinute')}
+            </span>
+          )}
         </div>
       </CardContent>
     </Card>
