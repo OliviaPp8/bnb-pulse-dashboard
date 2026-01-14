@@ -67,8 +67,10 @@ export function LpLocking({ data }: LpLockingProps) {
                   border: '1px solid hsl(228, 10%, 20%)',
                   borderRadius: '8px',
                   fontSize: '12px',
+                  color: 'hsl(40, 6%, 95%)',
                 }}
                 labelStyle={{ color: 'hsl(40, 6%, 95%)' }}
+                itemStyle={{ color: 'hsl(40, 6%, 95%)' }}
                 formatter={(value: number) => [formatNumber(value), t('totalLockedValue')]}
               />
               <Bar dataKey="value" radius={[0, 4, 4, 0]}>
