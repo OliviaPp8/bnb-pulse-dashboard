@@ -80,7 +80,7 @@ const getNextQuarterlyBurnDate = (): Date => {
 };
 
 export function useBurnInfo(): BurnInfo {
-  const apiKey = import.meta.env.VITE_NODEREAL_API_KEY || '';
+  const apiKey = import.meta.env.NODEREAL_API_KEY || '';
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['burn-info'],

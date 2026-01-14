@@ -97,7 +97,7 @@ const calculateBurnRate = async (apiKey: string): Promise<{ burnRate: number; la
 };
 
 export function useBep95Burn(): Bep95BurnData {
-  const apiKey = import.meta.env.VITE_NODEREAL_API_KEY || '';
+  const apiKey = import.meta.env.NODEREAL_API_KEY || '';
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['bep95-burn-rate'],
