@@ -13,7 +13,7 @@ const INITIAL_SUPPLY = 200_000_000; // Initial BNB supply
 const TARGET_SUPPLY = 100_000_000; // Target supply after burns
 
 const fetchCirculatingSupply = async (): Promise<number> => {
-  const apiKey = import.meta.env.VITE_ETHERSCAN_API_KEY || '';
+  const apiKey = import.meta.env.ETHERSCAN_API_KEY || '';
   const url = `https://api.etherscan.io/v2/api?chainid=56&module=stats&action=circulatingtokensupply&apikey=${apiKey}`;
   
   const response = await fetch(url);

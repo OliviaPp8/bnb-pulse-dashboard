@@ -106,7 +106,7 @@ const fetchChainMetrics = async (apiKey: string): Promise<ChainMetrics[]> => {
 };
 
 export function useChainMetrics() {
-  const apiKey = import.meta.env.VITE_NODEREAL_API_KEY || '';
+  const apiKey = import.meta.env.NODEREAL_API_KEY || '';
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['chain-metrics'],
