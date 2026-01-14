@@ -198,20 +198,28 @@ export interface SovereignData {
 
 export const mockInstitutionalHoldings: InstitutionalHolding[] = [
   {
-    ticker: '$BNC',
+    ticker: 'BNC.US',
     company: 'CEA Industries',
-    holdings: 47_500,
+    holdings: 515_054,
     costBasis: 851,
-    currentPrice: 710,
-    mNavPremium: 2.1,
+    currentPrice: 939,
+    mNavPremium: 0.57,
   },
   {
-    ticker: '$NA',
+    ticker: 'NA.US',
     company: 'Nano Labs',
-    holdings: 32_100,
-    costBasis: 580,
-    currentPrice: 710,
-    mNavPremium: 1.8,
+    holdings: 128_000,
+    costBasis: 713,
+    currentPrice: 939,
+    mNavPremium: 0.35,
+  },
+  {
+    ticker: 'BTC.BK',
+    company: 'The Brooker Group',
+    holdings: 43_022,
+    costBasis: 0,
+    currentPrice: 939,
+    mNavPremium: 1.66,
   },
 ];
 
