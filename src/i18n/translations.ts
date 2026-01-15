@@ -81,8 +81,7 @@ export const translations = {
     lpLocking: "On-chain LP Locking",
     totalLockedValue: "Total Locked Value",
     pinkSale: "PinkSale",
-    unicrypt: "Unicrypt",
-    teamFinance: "Team Finance",
+    uncxNetwork: "UNCX Network",
 
     // Aster Index
     asterIndex: "Aster Arbitrage Index",
@@ -196,8 +195,7 @@ export const translations = {
     lpLocking: "链上LP锁仓",
     totalLockedValue: "总锁仓价值",
     pinkSale: "PinkSale",
-    unicrypt: "Unicrypt",
-    teamFinance: "Team Finance",
+    uncxNetwork: "UNCX Network",
 
     // Aster Index
     asterIndex: "Aster 套利指数",
