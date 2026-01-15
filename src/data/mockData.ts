@@ -152,20 +152,14 @@ export const mockLpLockData: LpLockData[] = [
   {
     platform: 'PinkSale',
     platformKey: 'pinkSale',
-    lockedValue: 890_000_000,
-    lpPairs: 12500,
+    lockedValue: 224_750_000, // From DefiLlama BSC TVL
+    lpPairs: 15000,
   },
   {
-    platform: 'Unicrypt',
-    platformKey: 'unicrypt',
-    lockedValue: 650_000_000,
-    lpPairs: 8200,
-  },
-  {
-    platform: 'Team Finance',
-    platformKey: 'teamFinance',
-    lockedValue: 420_000_000,
-    lpPairs: 5600,
+    platform: 'UNCX Network',
+    platformKey: 'uncxNetwork',
+    lockedValue: 58_540_000, // From DefiLlama BSC TVL
+    lpPairs: 4200,
   },
 ];
 
