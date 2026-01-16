@@ -2,7 +2,6 @@ import { useLanguage } from '@/i18n';
 import { Landmark } from 'lucide-react';
 import { InstitutionalRankings } from './InstitutionalRankings';
 import { SovereignMonitor } from './SovereignMonitor';
-import { SovereignLocking } from './SovereignLocking';
 
 export function SovereignCurve() {
   const { t } = useLanguage();
@@ -24,10 +23,7 @@ export function SovereignCurve() {
         <InstitutionalRankings />
 
         {/* Right Column: Sovereign */}
-        <div className="space-y-4">
-          <SovereignMonitor />
-          <SovereignLocking />
-        </div>
+        <SovereignMonitor />
       </div>
     </section>
   );
