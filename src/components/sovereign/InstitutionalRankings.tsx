@@ -42,7 +42,7 @@ export function InstitutionalRankings() {
                   {formatNumber(holding.holdings)} BNB
                 </td>
                 <td className="py-3 text-right text-muted-foreground">
-                  {formatCurrency(holding.costBasis)}
+                  {holding.costBasis === 0 ? 'N/A' : formatCurrency(holding.costBasis)}
                 </td>
                 <td className="py-3 text-right">
                   <span className="rounded-md bg-primary/20 px-2 py-1 font-mono text-primary">
