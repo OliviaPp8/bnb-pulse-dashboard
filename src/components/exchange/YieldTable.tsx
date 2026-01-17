@@ -14,9 +14,10 @@ import { TranslationKey } from '@/i18n/translations';
 
 interface YieldTableProps {
   data: YieldData[];
+  isLoading?: boolean;
 }
 
-export function YieldTable({ data }: YieldTableProps) {
+export function YieldTable({ data, isLoading }: YieldTableProps) {
   const { t } = useLanguage();
 
   const getAprColor = (apr: number) => {

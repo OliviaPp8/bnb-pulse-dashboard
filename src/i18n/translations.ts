@@ -112,6 +112,19 @@ export const translations = {
     sovereignLocking: "Sovereign Lock Ratio",
     ofCirculating: "of circulating supply",
     totalSovereignLocked: "Total Sovereign Locked",
+    
+    // Loading states
+    loading: "Loading",
+    
+    // Simple Earn
+    simpleEarnFlexible: "Simple Earn Flexible",
+    simpleEarnLocked: "Simple Earn Locked",
+    flexibleEarn: "Flexible Earn",
+    lockedEarn: "Locked Earn",
+    "120dayLock": "120-day Lock",
+    "90dayLock": "90-day Lock",
+    "60dayLock": "60-day Lock",
+    "30dayLock": "30-day Lock",
   },
   zh: {
     // Header
@@ -226,6 +239,19 @@ export const translations = {
     sovereignLocking: "主权锁仓比例",
     ofCirculating: "占流通量",
     totalSovereignLocked: "主权锁仓总量",
+    
+    // Loading states
+    loading: "加载中",
+    
+    // Simple Earn
+    simpleEarnFlexible: "活期理财",
+    simpleEarnLocked: "定期理财",
+    flexibleEarn: "活期收益",
+    lockedEarn: "定期收益",
+    "120dayLock": "120天锁定",
+    "90dayLock": "90天锁定",
+    "60dayLock": "60天锁定",
+    "30dayLock": "30天锁定",
   },
 } as const;
 
