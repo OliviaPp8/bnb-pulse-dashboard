@@ -125,6 +125,8 @@ export const translations = {
     "90dayLock": "90-day Lock",
     "60dayLock": "60-day Lock",
     "30dayLock": "30-day Lock",
+    estimatedValueNote: "Estimated value - actual returns vary by project",
+    estimatedValueFootnote: "Estimated values based on historical data, actual returns may vary",
   },
   zh: {
     // Header
@@ -252,6 +254,8 @@ export const translations = {
     "90dayLock": "90天锁定",
     "60dayLock": "60天锁定",
     "30dayLock": "30天锁定",
+    estimatedValueNote: "估算值 - 实际收益因项目而异",
+    estimatedValueFootnote: "基于历史数据的估算值，实际收益可能有所不同",
   },
 } as const;
 

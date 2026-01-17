@@ -70,8 +70,21 @@ async function fetchBinanceAPI(endpoint: string, params: Record<string, string> 
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error(`Binance API error: ${response.status} - ${errorText}`);
-    throw new Error(`Binance API error: ${response.status}`);
+    let errorDetails = { code: 0, msg: errorText };
+    try {
+      errorDetails = JSON.parse(errorText);
+    } catch {
+      // Keep raw text if not JSON
+    }
+    console.error(`Binance API error: ${response.status}`, {
+      code: errorDetails.code,
+      msg: errorDetails.msg,
+      endpoint: endpoint,
+      hasApiKey: !!apiKey,
+      hasApiSecret: !!apiSecret,
+      timestamp,
+    });
+    throw new Error(`Binance API error (${errorDetails.code}): ${errorDetails.msg}`);
   }
 
   return response.json();

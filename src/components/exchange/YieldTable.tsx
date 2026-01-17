@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { TranslationKey } from '@/i18n/translations';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Info } from 'lucide-react';
 
 interface YieldTableProps {
   data: YieldData[];
@@ -47,14 +49,28 @@ export function YieldTable({ data, isLoading }: YieldTableProps) {
             {data.map((item, index) => (
               <TableRow key={index} className="border-border">
                 <TableCell className="font-medium text-foreground">
-                  {t(item.channelKey as TranslationKey)}
+                  <span className="flex items-center gap-1">
+                    {t(item.channelKey as TranslationKey)}
+                    {item.isEstimated && (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Info className="h-3 w-3 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-xs">{t('estimatedValueNote')}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    )}
+                  </span>
                 </TableCell>
                 <TableCell className="text-muted-foreground">
                   {t(item.productTypeKey as TranslationKey)}
                 </TableCell>
                 <TableCell className="text-right">
-                  <Badge className={getAprColor(item.apr)}>
-                    {item.apr.toFixed(1)}%
+                  <Badge className={`${getAprColor(item.apr)} ${item.isEstimated ? 'opacity-70' : ''}`}>
+                    {item.isEstimated ? '~' : ''}{item.apr.toFixed(1)}%
                   </Badge>
                 </TableCell>
                 <TableCell className="text-xs text-muted-foreground">
@@ -64,6 +80,9 @@ export function YieldTable({ data, isLoading }: YieldTableProps) {
             ))}
           </TableBody>
         </Table>
+        <p className="mt-2 text-xs text-muted-foreground">
+          * {t('estimatedValueFootnote')}
+        </p>
       </CardContent>
     </Card>
   );
