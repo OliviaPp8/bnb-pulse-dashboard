@@ -65,6 +65,7 @@ function transformToYieldData(data: BinanceYieldsResponse): YieldData[] {
     productTypeKey: 'newCoinMining',
     apr: 8.0, // Estimated based on historical data
     bonusKey: 'estimatedPerBnb',
+    isEstimated: true,
   });
 
   // Add BNB Vault as static entry
@@ -74,6 +75,7 @@ function transformToYieldData(data: BinanceYieldsResponse): YieldData[] {
     productTypeKey: 'aggregatedPool',
     apr: 5.5, // Approximate
     bonusKey: 'autoParticipate',
+    isEstimated: true,
   });
 
   return yields;

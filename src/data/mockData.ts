@@ -19,6 +19,7 @@ export interface YieldData {
   productTypeKey: string;
   apr: number;
   bonusKey: string;
+  isEstimated?: boolean;
 }
 
 export interface AirdropData {
