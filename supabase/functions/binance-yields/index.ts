@@ -113,26 +113,30 @@ async function getFlexibleProducts(): Promise<any[]> {
     
     return (data.rows || []).map((product: BinanceFlexibleProduct) => {
       // Prefer tierAnnualPercentageRate (higher rates for smaller holdings)
+      // NOTE: Object entry order is not guaranteed, so we take the MAX tier rate.
       // tierAnnualPercentageRate example: {"0-1000BNB": "0.0015", "1000-5000BNB": "0.001"}
       let apr = 0;
-      
-      if (product.tierAnnualPercentageRate) {
-        const tierRates = Object.entries(product.tierAnnualPercentageRate);
-        if (tierRates.length > 0) {
-          // Get the first tier rate (usually highest, for smallest holdings)
-          const firstTierRate = parseFloat(tierRates[0][1]);
-          apr = firstTierRate * 100;  // 0.0015 * 100 = 0.15%
-          console.log(`BNB Flexible using tier rate: ${tierRates[0][0]} = ${apr}%`);
+
+      const tierMap = product.tierAnnualPercentageRate;
+      if (tierMap && Object.keys(tierMap).length > 0) {
+        const parsed = Object.entries(tierMap)
+          .map(([tier, rate]) => ({ tier, rate: Number.parseFloat(rate) }))
+          .filter((x) => Number.isFinite(x.rate) && x.rate > 0);
+
+        if (parsed.length > 0) {
+          const best = parsed.reduce((a, b) => (b.rate > a.rate ? b : a));
+          apr = best.rate * 100;
+          console.log(`BNB Flexible using best tier rate: ${best.tier} = ${apr}%`);
         }
       }
-      
+
       // Fallback to base rate if no tier rates
       if (apr === 0) {
-        const rawRate = parseFloat(product.latestAnnualPercentageRate);
-        apr = rawRate * 100;
+        const rawRate = Number.parseFloat(product.latestAnnualPercentageRate);
+        apr = (Number.isFinite(rawRate) ? rawRate : 0) * 100;
         console.log(`BNB Flexible using base rate: ${apr}%`);
       }
-      
+
       return {
         asset: product.asset,
         apr: apr,
