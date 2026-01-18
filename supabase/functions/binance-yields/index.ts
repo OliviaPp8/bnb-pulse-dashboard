@@ -15,13 +15,19 @@ interface BinanceFlexibleProduct {
 }
 
 interface BinanceLockedProduct {
-  asset: string;
-  rewardAsset: string;
-  duration: number;
-  apr: string;
-  minPurchaseAmount: string;
-  status: string;
-  canPurchase: boolean;
+  projectId: string;
+  detail: {
+    asset: string;
+    rewardAsset: string;
+    duration: number;
+    apr: string;
+    status: string;
+    extraRewardAPR?: string;
+  };
+  quota: {
+    totalPersonalQuota: string;
+    minimum: string;
+  };
 }
 
 interface CachedData {
@@ -100,15 +106,28 @@ async function getFlexibleProducts(): Promise<any[]> {
     
     console.log(`Fetched ${data.rows?.length || 0} flexible products`);
     
-    return (data.rows || []).map((product: BinanceFlexibleProduct) => ({
-      asset: product.asset,
-      apr: parseFloat(product.latestAnnualPercentageRate) * 100,
-      tierRates: product.tierAnnualPercentageRate,
-      minAmount: product.minPurchaseAmount,
-      productType: 'flexible',
-      status: product.status,
-      canPurchase: product.canPurchase,
-    }));
+    // Log raw data for debugging
+    if (data.rows?.[0]) {
+      console.log('Raw flexible product:', JSON.stringify(data.rows[0]));
+    }
+    
+    return (data.rows || []).map((product: BinanceFlexibleProduct) => {
+      // latestAnnualPercentageRate is in decimal format (e.g., 0.0015 = 0.15%)
+      const rawRate = parseFloat(product.latestAnnualPercentageRate);
+      const apr = rawRate * 100;  // Convert to percentage
+      
+      console.log(`BNB Flexible APR: raw=${rawRate}, apr=${apr}%`);
+      
+      return {
+        asset: product.asset,
+        apr: apr,
+        tierRates: product.tierAnnualPercentageRate,
+        minAmount: product.minPurchaseAmount,
+        productType: 'flexible',
+        status: product.status,
+        canPurchase: product.canPurchase,
+      };
+    });
   } catch (error) {
     console.error('Error fetching flexible products:', error);
     return [];
@@ -125,16 +144,28 @@ async function getLockedProducts(): Promise<any[]> {
     
     console.log(`Fetched ${data.rows?.length || 0} locked products`);
     
-    return (data.rows || []).map((product: BinanceLockedProduct) => ({
-      asset: product.asset,
-      rewardAsset: product.rewardAsset,
-      apr: parseFloat(product.apr) * 100,
-      duration: product.duration,
-      minAmount: product.minPurchaseAmount,
-      productType: 'locked',
-      status: product.status,
-      canPurchase: product.canPurchase,
-    }));
+    // Log raw data for debugging
+    if (data.rows?.[0]) {
+      console.log('Raw locked product:', JSON.stringify(data.rows[0]));
+    }
+    
+    return (data.rows || []).map((product: BinanceLockedProduct) => {
+      // APR is inside detail object, in decimal format (e.g., 0.0032 = 0.32%)
+      const rawRate = parseFloat(product.detail?.apr || '0');
+      const apr = rawRate * 100;  // Convert to percentage
+      
+      console.log(`BNB Locked APR: duration=${product.detail?.duration}, raw=${rawRate}, apr=${apr}%`);
+      
+      return {
+        asset: product.detail?.asset || 'BNB',
+        rewardAsset: product.detail?.rewardAsset,
+        apr: apr,
+        duration: product.detail?.duration,
+        minAmount: product.quota?.minimum,
+        productType: 'locked',
+        status: product.detail?.status,
+      };
+    });
   } catch (error) {
     console.error('Error fetching locked products:', error);
     return [];

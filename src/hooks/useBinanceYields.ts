@@ -40,20 +40,19 @@ function transformToYieldData(data: BinanceYieldsResponse): YieldData[] {
 
   // Add locked products (group by duration)
   if (data.locked && data.locked.length > 0) {
-    const bnbLocked = data.locked.filter(p => p.asset === 'BNB');
+    const bnbLocked = data.locked.filter(p => p.asset === 'BNB' && p.apr > 0);
     
-    // Get highest APR locked product
-    const highestAprLocked = bnbLocked.reduce((max, p) => 
-      p.apr > max.apr ? p : max, bnbLocked[0]
-    );
+    // Sort by APR descending and get the best one
+    const sortedLocked = bnbLocked.sort((a, b) => b.apr - a.apr);
     
-    if (highestAprLocked) {
+    if (sortedLocked.length > 0) {
+      const best = sortedLocked[0];
       yields.push({
         channel: 'Simple Earn Locked',
         channelKey: 'simpleEarnLocked',
-        productTypeKey: 'lockedEarn',
-        apr: highestAprLocked.apr,
-        bonusKey: `${highestAprLocked.duration || 120}dayLock`,
+        productTypeKey: `${best.duration || 120}dayLock`,
+        apr: best.apr,
+        bonusKey: 'lockedEarn',
       });
     }
   }

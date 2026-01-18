@@ -28,6 +28,13 @@ export function YieldTable({ data, isLoading }: YieldTableProps) {
     return 'bg-secondary text-secondary-foreground';
   };
 
+  // Smart APR formatting - show 2 decimals for small values
+  const formatApr = (apr: number, isEstimated: boolean) => {
+    const prefix = isEstimated ? '~' : '';
+    const decimals = apr < 1 ? 2 : 1;
+    return `${prefix}${apr.toFixed(decimals)}%`;
+  };
+
   return (
     <Card className="card-glow">
       <CardHeader className="pb-3">
@@ -70,7 +77,7 @@ export function YieldTable({ data, isLoading }: YieldTableProps) {
                 </TableCell>
                 <TableCell className="text-right">
                   <Badge className={`${getAprColor(item.apr)} ${item.isEstimated ? 'opacity-70' : ''}`}>
-                    {item.isEstimated ? '~' : ''}{item.apr.toFixed(1)}%
+                    {formatApr(item.apr, item.isEstimated || false)}
                   </Badge>
                 </TableCell>
                 <TableCell className="text-xs text-muted-foreground">
