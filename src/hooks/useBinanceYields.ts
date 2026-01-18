@@ -58,22 +58,13 @@ function transformToYieldData(data: BinanceYieldsResponse): YieldData[] {
   }
 
   // Add Launchpool as static entry (not available via Simple Earn API)
+  // Based on PANews 2024 analysis: ~47% annualized from 21 Launchpool events
   yields.push({
     channel: 'Launchpool',
     channelKey: 'launchpool',
     productTypeKey: 'newCoinMining',
-    apr: 8.0, // Estimated based on historical data
+    apr: 40.0, // Conservative estimate based on 2024 historical data
     bonusKey: 'estimatedPerBnb',
-    isEstimated: true,
-  });
-
-  // Add BNB Vault as static entry
-  yields.push({
-    channel: 'BNB Vault',
-    channelKey: 'bnbVault',
-    productTypeKey: 'aggregatedPool',
-    apr: 5.5, // Approximate
-    bonusKey: 'autoParticipate',
     isEstimated: true,
   });
 
