@@ -84,7 +84,8 @@ export const translations = {
     uncxNetwork: "UNCX Network",
 
     // Aster Index
-    asterIndex: "Aster Arbitrage Index",
+    asterIndex: "Aster Activity Index",
+    asterIndexTooltip: "Aster remains the most active giant on BNB Chain and the absolute main force of \"Gas burning\".",
     tradingVolume: "24h Trading Volume",
     actualHoldings: "Actual Holdings",
     arbitrageWindow: "Arbitrage Window",
@@ -213,7 +214,8 @@ export const translations = {
     uncxNetwork: "UNCX Network",
 
     // Aster Index
-    asterIndex: "Aster 套利指数",
+    asterIndex: "Aster 活跃指数",
+    asterIndexTooltip: "Aster 依然是 BNB Chain 上最活跃的巨无霸，并且是 \"Gas 燃烧\" 的绝对主力。",
     tradingVolume: "24小时交易量",
     actualHoldings: "实际持仓量",
     arbitrageWindow: "套利窗口",
