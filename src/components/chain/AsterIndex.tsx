@@ -1,8 +1,14 @@
 import { useLanguage } from '@/i18n';
 import { AsterData } from '@/data/mockData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp, AlertTriangle } from 'lucide-react';
+import { TrendingUp, AlertTriangle, Info } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface AsterIndexProps {
   data: AsterData;
@@ -24,6 +30,16 @@ export function AsterIndex({ data }: AsterIndexProps) {
         <CardTitle className="flex items-center gap-2 text-base font-semibold">
           <TrendingUp className="h-4 w-4 text-chart-purple" />
           {t('asterIndex')}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs">
+                <p>{t('asterIndexTooltip')}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
