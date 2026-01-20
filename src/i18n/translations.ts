@@ -83,6 +83,11 @@ export const translations = {
     pinkSale: "PinkSale",
     uncxNetwork: "UNCX Network",
 
+    // Aster TVL
+    asterTvl: "Aster TVL Breakdown",
+    asterBscTvl: "BSC Total TVL",
+    loadingError: "Failed to load data",
+
     // Aster Index
     asterIndex: "Aster Activity Index",
     asterIndexTooltip: "Aster remains the most active giant on BNB Chain and the absolute main force of \"Gas burning\".",
@@ -212,6 +217,11 @@ export const translations = {
     totalLockedValue: "总锁仓价值",
     pinkSale: "PinkSale",
     uncxNetwork: "UNCX Network",
+
+    // Aster TVL
+    asterTvl: "Aster TVL 构成",
+    asterBscTvl: "BSC 总锁仓量",
+    loadingError: "数据加载失败",
 
     // Aster Index
     asterIndex: "Aster 活跃指数",

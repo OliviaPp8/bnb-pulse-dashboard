@@ -3,6 +3,7 @@ import { ActivityMonitor } from './ActivityMonitor';
 import { LsdLocking } from './LsdLocking';
 import { LpLocking } from './LpLocking';
 import { AsterIndex } from './AsterIndex';
+import { AsterTvlChart } from './AsterTvlChart';
 import { mockLsdData, mockAsterData, mockLpLockData } from '@/data/mockData';
 
 export function ChainCurve() {
@@ -23,6 +24,11 @@ export function ChainCurve() {
         <LsdLocking data={mockLsdData} />
         <LpLocking data={mockLpLockData} />
         <AsterIndex data={mockAsterData} />
+      </div>
+
+      {/* Aster TVL Chart - below LP Locking section */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <AsterTvlChart />
       </div>
     </section>
   );
