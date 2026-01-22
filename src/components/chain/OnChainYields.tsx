@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/table';
 import { TrendingUp, Shield, Layers, Flame, ExternalLink } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { AsterBacking } from './AsterBacking';
 
 function formatTvl(tvl: number): string {
   if (tvl >= 1_000_000_000) {
@@ -227,6 +228,9 @@ export function OnChainYields() {
           </Card>
         ))}
       </div>
+
+      {/* Aster asBNB - Stable Category Highlight */}
+      <AsterBacking />
 
       {data?.lastUpdated && (
         <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">

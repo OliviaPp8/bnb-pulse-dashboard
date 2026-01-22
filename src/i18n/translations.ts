@@ -83,10 +83,10 @@ export const translations = {
     pinkSale: "PinkSale",
     uncxNetwork: "UNCX Network",
 
-    // Aster TVL
-    asterTvl: "Aster TVL Breakdown",
-    asterBscTvl: "BSC Total TVL",
+    // Aster
     loadingError: "Failed to load data",
+    backingComposition: "Backing Composition",
+    onchainData: "On-chain Data",
 
     // Aster Index
     asterIndex: "Aster Activity Index",
@@ -231,10 +231,10 @@ export const translations = {
     pinkSale: "PinkSale",
     uncxNetwork: "UNCX Network",
 
-    // Aster TVL
-    asterTvl: "Aster TVL 构成",
-    asterBscTvl: "BSC 总锁仓量",
+    // Aster
     loadingError: "数据加载失败",
+    backingComposition: "资产构成",
+    onchainData: "链上数据",
 
     // Aster Index
     asterIndex: "Aster 活跃指数",
