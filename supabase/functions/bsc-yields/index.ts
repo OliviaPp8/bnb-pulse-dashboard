@@ -87,9 +87,12 @@ serve(async (req) => {
     
     console.log(`Total pools fetched: ${pools.length}`);
     
-    // Filter for BSC chain with dual strategy: BNB-related symbols OR target projects
+    // Filter for BSC chain - ONLY BNB-related symbols (strict filtering)
+    // Include BNB derivatives, LSDs, and Tranchess products (which are all BNB-backed)
     const bnbSymbols = ['bnb', 'wbnb', 'vbnb', 'slisbnb', 'asbnb', 'abnbc', 'bnbx', 'ankrbnb', 'stkbnb', 'queen', 'bishop', 'rook'];
-    const targetProjects = ['aster', 'astherus', 'tranchess', 'venus', 'lista', 'pancakeswap', 'kinza', 'radiant', 'alpaca', 'thena'];
+    
+    // Exclude stablecoins and non-BNB tokens explicitly
+    const excludedSymbols = ['usdt', 'usdc', 'busd', 'dai', 'tusd', 'frax', 'lusd', 'usdp', 'usdd', 'fdusd', 'btc', 'eth', 'weth', 'btcb', 'cake', 'xvs', 'the', 'alpaca', 'bsw'];
     
     // Debug: Log all Aster and Tranchess pools on BSC
     const debugPools = pools.filter((p: YieldPool) => 
@@ -108,13 +111,16 @@ serve(async (req) => {
       if (pool.tvlUsd < 100000) return false; // Filter out small pools (>$100k)
       
       const symbolLower = pool.symbol.toLowerCase();
-      const projectLower = pool.project.toLowerCase();
       
-      // Match condition: symbol contains BNB keywords OR project is in target list
-      const matchesSymbol = bnbSymbols.some(s => symbolLower.includes(s));
-      const matchesProject = targetProjects.some(p => projectLower.includes(p));
+      // Exclude non-BNB tokens (stablecoins, BTC, ETH, governance tokens)
+      if (excludedSymbols.some(s => symbolLower === s || symbolLower.startsWith(s + '-') || symbolLower.endsWith('-' + s))) {
+        return false;
+      }
       
-      return matchesSymbol || matchesProject;
+      // Must contain BNB-related symbol
+      const matchesBnb = bnbSymbols.some(s => symbolLower.includes(s));
+      
+      return matchesBnb;
     });
     
     console.log(`BSC filtered pools: ${bscPools.length}`);
