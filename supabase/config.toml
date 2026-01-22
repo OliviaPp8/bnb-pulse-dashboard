@@ -1,1 +1,10 @@
 project_id = "zrubgpirebvulnniyjql"
+
+[functions.binance-yields]
+verify_jwt = false
+
+[functions.aster-tvl]
+verify_jwt = false
+
+[functions.bsc-yields]
+verify_jwt = false

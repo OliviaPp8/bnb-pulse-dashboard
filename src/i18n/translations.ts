@@ -133,6 +133,19 @@ export const translations = {
     "30dayLock": "30-day Lock",
     estimatedValueNote: "Estimated value - actual returns vary by project",
     estimatedValueFootnote: "Estimated values based on historical data, actual returns may vary",
+    
+    // On-chain Yields
+    onChainYields: "On-chain Yields",
+    onChainYieldsDesc: "BSC DeFi Yield Rankings by Risk Profile",
+    stableYields: "Stable",
+    stableYieldsDesc: "Lending & LSD",
+    structuredYields: "Structured",
+    structuredYieldsDesc: "Fixed income & Index",
+    degenYields: "High Yield",
+    degenYieldsDesc: "LP & Mining",
+    topYield: "Top Yield",
+    noYieldsFound: "No yields found",
+    dataSource: "Data source",
   },
   zh: {
     // Header
@@ -268,6 +281,19 @@ export const translations = {
     "30dayLock": "30天锁定",
     estimatedValueNote: "估算值 - 实际收益因项目而异",
     estimatedValueFootnote: "基于历史数据的估算值，实际收益可能有所不同",
+    
+    // On-chain Yields
+    onChainYields: "链上收益率",
+    onChainYieldsDesc: "BSC DeFi 收益率排行（按风险分类）",
+    stableYields: "稳健区",
+    stableYieldsDesc: "借贷 & 质押",
+    structuredYields: "结构化",
+    structuredYieldsDesc: "固收 & 指数",
+    degenYields: "高收益",
+    degenYieldsDesc: "LP & 挖矿",
+    topYield: "最高收益",
+    noYieldsFound: "未找到收益数据",
+    dataSource: "数据来源",
   },
 } as const;
 
