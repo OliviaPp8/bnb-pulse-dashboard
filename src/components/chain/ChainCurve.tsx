@@ -18,14 +18,10 @@ export function ChainCurve() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <ActivityMonitor />
         <LsdLocking data={mockLsdData} />
         <LpLocking data={mockLpLockData} />
-      </div>
-
-      {/* Aster TVL Chart - below LP Locking section */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <AsterTvlChart />
       </div>
     </section>
