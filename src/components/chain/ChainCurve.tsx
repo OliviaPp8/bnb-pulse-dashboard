@@ -2,7 +2,6 @@ import { useLanguage } from '@/i18n';
 import { ActivityMonitor } from './ActivityMonitor';
 import { LsdLocking } from './LsdLocking';
 import { LpLocking } from './LpLocking';
-import { AsterTvlChart } from './AsterTvlChart';
 import { mockLsdData, mockLpLockData } from '@/data/mockData';
 
 export function ChainCurve() {
@@ -18,11 +17,10 @@ export function ChainCurve() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <ActivityMonitor />
         <LsdLocking data={mockLsdData} />
         <LpLocking data={mockLpLockData} />
-        <AsterTvlChart />
       </div>
     </section>
   );

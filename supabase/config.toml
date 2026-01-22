@@ -3,8 +3,8 @@ project_id = "zrubgpirebvulnniyjql"
 [functions.binance-yields]
 verify_jwt = false
 
-[functions.aster-tvl]
+[functions.bsc-yields]
 verify_jwt = false
 
-[functions.bsc-yields]
+[functions.aster-onchain]
 verify_jwt = false
