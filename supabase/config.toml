@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.aster-onchain]
 verify_jwt = false
+
+[functions.lp-locking]
+verify_jwt = false

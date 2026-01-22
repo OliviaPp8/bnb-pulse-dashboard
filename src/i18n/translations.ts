@@ -82,6 +82,7 @@ export const translations = {
     totalLockedValue: "Total Locked Value",
     pinkSale: "PinkSale",
     uncxNetwork: "UNCX Network",
+    teamFinance: "Team Finance",
 
     // Aster
     loadingError: "Failed to load data",
@@ -230,6 +231,7 @@ export const translations = {
     totalLockedValue: "总锁仓价值",
     pinkSale: "PinkSale",
     uncxNetwork: "UNCX Network",
+    teamFinance: "Team Finance",
 
     // Aster
     loadingError: "数据加载失败",

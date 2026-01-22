@@ -2,10 +2,12 @@ import { useLanguage } from '@/i18n';
 import { ActivityMonitor } from './ActivityMonitor';
 import { LsdLocking } from './LsdLocking';
 import { LpLocking } from './LpLocking';
-import { mockLsdData, mockLpLockData } from '@/data/mockData';
+import { mockLsdData } from '@/data/mockData';
+import { useLpLocking } from '@/hooks/useLpLocking';
 
 export function ChainCurve() {
   const { t } = useLanguage();
+  const { data: lpLockData, isLoading: lpLoading, error: lpError } = useLpLocking();
 
   return (
     <section className="space-y-4">
@@ -20,7 +22,7 @@ export function ChainCurve() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <ActivityMonitor />
         <LsdLocking data={mockLsdData} />
-        <LpLocking data={mockLpLockData} />
+        <LpLocking data={lpLockData} isLoading={lpLoading} error={lpError} />
       </div>
     </section>
   );

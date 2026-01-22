@@ -1,15 +1,23 @@
 import { useLanguage } from '@/i18n';
-import { LpLockData } from '@/data/mockData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Droplets } from 'lucide-react';
+import { Droplets, Loader2, AlertCircle } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { TranslationKey } from '@/i18n/translations';
 
-interface LpLockingProps {
-  data: LpLockData[];
+export interface LpLockData {
+  platform: string;
+  platformKey: string;
+  lockedValue: number;
+  lpPairs: number;
 }
 
-export function LpLocking({ data }: LpLockingProps) {
+interface LpLockingProps {
+  data: LpLockData[];
+  isLoading?: boolean;
+  error?: Error | null;
+}
+
+export function LpLocking({ data, isLoading, error }: LpLockingProps) {
   const { t } = useLanguage();
 
   const totalLocked = data.reduce((sum, item) => sum + item.lockedValue, 0);
@@ -25,11 +33,11 @@ export function LpLocking({ data }: LpLockingProps) {
   };
 
   const chartData = data.map((item) => ({
-    name: t(item.platformKey as TranslationKey),
+    name: t(item.platformKey as TranslationKey) || item.platform,
     value: item.lockedValue,
   }));
 
-  const colors = ['hsl(199, 89%, 48%)', 'hsl(262, 83%, 58%)', 'hsl(340, 82%, 52%)'];
+  const colors = ['hsl(199, 89%, 48%)', 'hsl(262, 83%, 58%)', 'hsl(340, 82%, 52%)', 'hsl(142, 76%, 36%)'];
 
   return (
     <Card className="card-glow">
@@ -37,6 +45,12 @@ export function LpLocking({ data }: LpLockingProps) {
         <CardTitle className="flex items-center gap-2 text-base font-semibold">
           <Droplets className="h-4 w-4 text-chart-blue" />
           {t('lpLocking')}
+          {isLoading && <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />}
+          {error && (
+            <span className="text-destructive" title={error.message}>
+              <AlertCircle className="h-3 w-3" />
+            </span>
+          )}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -49,7 +63,7 @@ export function LpLocking({ data }: LpLockingProps) {
         </div>
 
         {/* Bar Chart */}
-        <div className="h-36">
+        <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData} layout="vertical">
               <XAxis type="number" hide />
@@ -80,6 +94,12 @@ export function LpLocking({ data }: LpLockingProps) {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
+        </div>
+
+        {/* Data source indicator */}
+        <div className="flex items-center justify-end gap-1">
+          <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
+          <span className="text-[10px] text-muted-foreground">DefiLlama API</span>
         </div>
       </CardContent>
     </Card>
