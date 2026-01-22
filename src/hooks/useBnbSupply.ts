@@ -18,37 +18,33 @@ const INITIAL_SUPPLY = 200_000_000; // Initial BNB supply
 const TARGET_SUPPLY = 100_000_000; // Target supply after burns
 const DEAD_ADDRESS = '0x000000000000000000000000000000000000dEaD'; // BNB burn address
 
-// Fetch both circulating supply and burned amount in a single query
+// Fetch supply data from CoinGecko and burned amount from Etherscan
 const fetchSupplyData = async (): Promise<SupplyApiResult> => {
   const apiKey = import.meta.env.VITE_ETHERSCAN_API_KEY || '';
   
-  // Fetch both in parallel
-  const [supplyResponse, burnedResponse] = await Promise.all([
-    fetch(`https://api.etherscan.io/v2/api?chainid=56&module=stats&action=circulatingtokensupply&apikey=${apiKey}`),
+  // Fetch both in parallel: CoinGecko for circulating supply, Etherscan for burned
+  const [geckoResponse, burnedResponse] = await Promise.all([
+    fetch('https://api.coingecko.com/api/v3/coins/binancecoin?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false'),
     fetch(`https://api.etherscan.io/v2/api?chainid=56&module=account&action=balance&address=${DEAD_ADDRESS}&apikey=${apiKey}`)
   ]);
   
-  if (!supplyResponse.ok || !burnedResponse.ok) {
-    throw new Error('API request failed');
-  }
-  
-  const [supplyData, burnedData] = await Promise.all([
-    supplyResponse.json(),
-    burnedResponse.json()
-  ]);
-  
-  // Parse circulating supply
+  // Parse circulating supply from CoinGecko
   let circulating = 144_000_000; // Fallback
-  if (supplyData.status === '1') {
-    const supplyInWei = BigInt(supplyData.result);
-    circulating = Number(supplyInWei / BigInt(10 ** 18));
+  if (geckoResponse.ok) {
+    const geckoData = await geckoResponse.json();
+    if (geckoData?.market_data?.circulating_supply) {
+      circulating = Math.round(geckoData.market_data.circulating_supply);
+    }
   }
   
-  // Parse burned amount from dead address
+  // Parse burned amount from dead address (Etherscan)
   let burned = INITIAL_SUPPLY - circulating; // Fallback to calculation
-  if (burnedData.status === '1') {
-    const balanceInWei = BigInt(burnedData.result);
-    burned = Number(balanceInWei / BigInt(10 ** 18));
+  if (burnedResponse.ok) {
+    const burnedData = await burnedResponse.json();
+    if (burnedData.status === '1') {
+      const balanceInWei = BigInt(burnedData.result);
+      burned = Number(balanceInWei / BigInt(10 ** 18));
+    }
   }
   
   return { circulating, burned };
