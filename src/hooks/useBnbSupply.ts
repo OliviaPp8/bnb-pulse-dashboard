@@ -31,19 +31,32 @@ const fetchSupplyData = async (): Promise<SupplyApiResult> => {
   // Parse circulating supply from CoinGecko
   let circulating = 144_000_000; // Fallback
   if (geckoResponse.ok) {
-    const geckoData = await geckoResponse.json();
-    if (geckoData?.market_data?.circulating_supply) {
-      circulating = Math.round(geckoData.market_data.circulating_supply);
+    try {
+      const geckoData = await geckoResponse.json();
+      console.log('CoinGecko market_data:', geckoData?.market_data?.circulating_supply, geckoData?.market_data?.total_supply);
+      if (geckoData?.market_data?.circulating_supply) {
+        circulating = Math.round(geckoData.market_data.circulating_supply);
+        console.log('Parsed circulating supply:', circulating);
+      }
+    } catch (e) {
+      console.error('Error parsing CoinGecko response:', e);
     }
+  } else {
+    console.error('CoinGecko API error:', geckoResponse.status);
   }
   
   // Parse burned amount from dead address (Etherscan)
   let burned = INITIAL_SUPPLY - circulating; // Fallback to calculation
   if (burnedResponse.ok) {
-    const burnedData = await burnedResponse.json();
-    if (burnedData.status === '1') {
-      const balanceInWei = BigInt(burnedData.result);
-      burned = Number(balanceInWei / BigInt(10 ** 18));
+    try {
+      const burnedData = await burnedResponse.json();
+      if (burnedData.status === '1') {
+        const balanceInWei = BigInt(burnedData.result);
+        burned = Number(balanceInWei / BigInt(10 ** 18));
+        console.log('Parsed burned from dead address:', burned);
+      }
+    } catch (e) {
+      console.error('Error parsing Etherscan response:', e);
     }
   }
   
