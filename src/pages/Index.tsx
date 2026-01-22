@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { Header } from '@/components/Header';
 import { ThePulse } from '@/components/pulse';
 import { ExchangeCurve } from '@/components/exchange';
-import { ChainCurve } from '@/components/chain';
+import { ChainCurve, OnChainYields } from '@/components/chain';
 import { SovereignCurve } from '@/components/sovereign';
 
 const Index = () => {
@@ -35,6 +35,9 @@ const Index = () => {
 
         {/* Chain Curve - On-chain Activity */}
         <ChainCurve />
+
+        {/* On-chain Yields - DeFi Yield Rankings */}
+        <OnChainYields />
 
         {/* DAT & Sovereign Curve - Institutional Holdings */}
         <SovereignCurve />
