@@ -2,14 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface AsterOnchainData {
-  totalTvlUsd: number;
-  asBnbSupply: number;
-  backing: {
-    slisBnb: { amount: number; valueBnb: number; usd: number; percentage: number };
-    bnb: { amount: number; usd: number; percentage: number };
-  };
-  prices: { bnb: number; slisBnbRate: number };
-  apy: number;
+  supply: number;
+  exchangeRate: number;
+  bnbPrice: number;
+  tvlBnb: number;
+  tvlUsd: number;
   lastUpdated: string;
 }
 
