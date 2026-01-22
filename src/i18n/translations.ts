@@ -19,7 +19,7 @@ export const translations = {
     // Deflation
     deflationClock: "Deflation Clock",
     nextQuarterlyBurn: "Next Quarterly Burn",
-    estimatedBurnAmount: "Est. Burn Amount",
+    estimatedBurnAmount: "Next Est. Burn Amount",
     quarterProgress: "Quarter Progress",
     bep95BurnRate: "BEP-95 Burn Rate",
     perMinute: "/min",
@@ -167,7 +167,7 @@ export const translations = {
     // Deflation
     deflationClock: "通缩时钟",
     nextQuarterlyBurn: "下次季度销毁",
-    estimatedBurnAmount: "预估销毁量",
+    estimatedBurnAmount: "下次预估销毁量",
     quarterProgress: "季度进度",
     bep95BurnRate: "BEP-95 燃烧速率",
     perMinute: "/分钟",
