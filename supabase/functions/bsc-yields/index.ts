@@ -35,6 +35,15 @@ function categorizePool(project: string, symbol: string): 'stable' | 'structured
   const projectLower = project.toLowerCase();
   const symbolLower = symbol.toLowerCase();
   
+  // Structured: Tranchess all products, Alpaca
+  if (projectLower.includes('tranchess') || 
+      projectLower.includes('alpaca') ||
+      symbolLower.includes('bishop') ||
+      symbolLower.includes('queen') ||
+      symbolLower.includes('rook')) {
+    return 'structured';
+  }
+  
   // Stable: Lending protocols with simple deposit
   if (projectLower.includes('venus') || 
       projectLower.includes('lista') || 
@@ -44,18 +53,11 @@ function categorizePool(project: string, symbol: string): 'stable' | 'structured
     return 'stable';
   }
   
-  // Structured: Tranchess, structured products
-  if (projectLower.includes('tranchess') || 
-      projectLower.includes('alpaca') ||
-      symbolLower.includes('bishop') ||
-      symbolLower.includes('queen')) {
-    return 'structured';
-  }
-  
-  // Degen: DEX LPs, high volatility
+  // Degen: DEX LPs, Aster, high volatility
   if (projectLower.includes('pancakeswap') || 
       projectLower.includes('thena') ||
       projectLower.includes('aster') ||
+      projectLower.includes('astherus') ||
       projectLower.includes('biswap') ||
       symbolLower.includes('lp') ||
       symbolLower.includes('-')) {
@@ -85,18 +87,37 @@ serve(async (req) => {
     
     console.log(`Total pools fetched: ${pools.length}`);
     
-    // Filter for BSC chain and BNB-related symbols
-    const bnbSymbols = ['bnb', 'wbnb', 'vbnb', 'slisbnb', 'asbnb', 'abnbc', 'bnbx', 'ankrbnb', 'stkbnb'];
+    // Filter for BSC chain with dual strategy: BNB-related symbols OR target projects
+    const bnbSymbols = ['bnb', 'wbnb', 'vbnb', 'slisbnb', 'asbnb', 'abnbc', 'bnbx', 'ankrbnb', 'stkbnb', 'queen', 'bishop', 'rook'];
+    const targetProjects = ['aster', 'astherus', 'tranchess', 'venus', 'lista', 'pancakeswap', 'kinza', 'radiant', 'alpaca', 'thena'];
     
-    const bscPools = pools.filter(pool => {
+    // Debug: Log all Aster and Tranchess pools on BSC
+    const debugPools = pools.filter((p: YieldPool) => 
+      p.chain === 'BSC' && 
+      (p.project.toLowerCase().includes('aster') || 
+       p.project.toLowerCase().includes('astherus') ||
+       p.project.toLowerCase().includes('tranchess'))
+    );
+    console.log(`Aster/Tranchess pools found: ${debugPools.length}`);
+    if (debugPools.length > 0) {
+      console.log('Sample Aster/Tranchess pools:', debugPools.slice(0, 5).map(p => ({ project: p.project, symbol: p.symbol, tvl: p.tvlUsd, apy: p.apy })));
+    }
+    
+    const bscPools = pools.filter((pool: YieldPool) => {
       if (pool.chain !== 'BSC') return false;
       if (pool.tvlUsd < 100000) return false; // Filter out small pools (>$100k)
       
       const symbolLower = pool.symbol.toLowerCase();
-      return bnbSymbols.some(s => symbolLower.includes(s));
+      const projectLower = pool.project.toLowerCase();
+      
+      // Match condition: symbol contains BNB keywords OR project is in target list
+      const matchesSymbol = bnbSymbols.some(s => symbolLower.includes(s));
+      const matchesProject = targetProjects.some(p => projectLower.includes(p));
+      
+      return matchesSymbol || matchesProject;
     });
     
-    console.log(`BSC BNB-related pools: ${bscPools.length}`);
+    console.log(`BSC filtered pools: ${bscPools.length}`);
     
     // Process and categorize pools
     const processedPools: ProcessedYield[] = bscPools.map(pool => ({
