@@ -1,7 +1,7 @@
 import { useLanguage } from '@/i18n';
 import { useBscYields, YieldPool } from '@/hooks/useBscYields';
+import { useAsterOnchain } from '@/hooks/useAsterOnchain';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { 
   Table, 
@@ -11,9 +11,8 @@ import {
   TableHeader, 
   TableRow 
 } from '@/components/ui/table';
-import { TrendingUp, Shield, Layers, Flame, ExternalLink } from 'lucide-react';
+import { TrendingUp, Shield, Layers, Flame, ExternalLink, Star } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { AsterBacking } from './AsterBacking';
 
 function formatTvl(tvl: number): string {
   if (tvl >= 1_000_000_000) {
@@ -65,9 +64,11 @@ interface YieldTableProps {
   pools: YieldPool[];
   isLoading: boolean;
   emptyMessage: string;
+  asterData?: { tvlUsd: number } | null;
+  asterLoading?: boolean;
 }
 
-function YieldTable({ pools, isLoading, emptyMessage }: YieldTableProps) {
+function YieldTable({ pools, isLoading, emptyMessage, asterData, asterLoading }: YieldTableProps) {
   const { t } = useLanguage();
 
   if (isLoading) {
@@ -80,7 +81,9 @@ function YieldTable({ pools, isLoading, emptyMessage }: YieldTableProps) {
     );
   }
 
-  if (pools.length === 0) {
+  const showAster = asterData && !asterLoading;
+
+  if (pools.length === 0 && !showAster) {
     return (
       <div className="text-center py-6 text-muted-foreground text-sm">
         {emptyMessage}
@@ -99,6 +102,52 @@ function YieldTable({ pools, isLoading, emptyMessage }: YieldTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
+        {/* Aster asBNB row - highlighted at top of Stable */}
+        {showAster && (
+          <TableRow className="hover:bg-chart-yellow/5 bg-chart-yellow/5">
+            <TableCell className="py-2">
+              <div className="flex items-center gap-1.5">
+                <Star className="h-3 w-3 text-chart-yellow" />
+                <span className="font-medium text-sm">AsterDEX</span>
+              </div>
+            </TableCell>
+            <TableCell className="py-2">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <span className="text-sm text-muted-foreground">asBNB</span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Liquid Staking + Launchpool</p>
+                    <p className="text-xs text-muted-foreground">On-chain data via NodeReal</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </TableCell>
+            <TableCell className="py-2 text-right">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <span className="font-mono font-semibold text-chart-yellow">
+                      Dynamic
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Launchpool + Hodler Airdrop</p>
+                    <p className="text-xs text-muted-foreground">APY varies by active campaigns</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </TableCell>
+            <TableCell className="py-2 text-right hidden sm:table-cell">
+              <span className="text-sm text-chart-yellow font-mono font-semibold">
+                {formatTvl(asterData.tvlUsd)}
+              </span>
+            </TableCell>
+          </TableRow>
+        )}
+        
+        {/* Regular pools */}
         {pools.map((pool, index) => (
           <TableRow key={`${pool.pool}-${index}`} className="hover:bg-muted/30">
             <TableCell className="py-2">
@@ -150,7 +199,8 @@ function YieldTable({ pools, isLoading, emptyMessage }: YieldTableProps) {
 
 export function OnChainYields() {
   const { t } = useLanguage();
-  const { data, isLoading, error } = useBscYields();
+  const { data, isLoading } = useBscYields();
+  const { data: asterData, isLoading: asterLoading } = useAsterOnchain();
 
   const categories = [
     {
@@ -160,6 +210,7 @@ export function OnChainYields() {
       icon: Shield,
       color: 'text-chart-blue',
       bgColor: 'bg-chart-blue/10',
+      showAster: true, // Only show Aster in Stable category
     },
     {
       key: 'structured' as const,
@@ -168,6 +219,7 @@ export function OnChainYields() {
       icon: Layers,
       color: 'text-chart-purple',
       bgColor: 'bg-chart-purple/10',
+      showAster: false,
     },
     {
       key: 'degen' as const,
@@ -176,6 +228,7 @@ export function OnChainYields() {
       icon: Flame,
       color: 'text-chart-orange',
       bgColor: 'bg-chart-orange/10',
+      showAster: false,
     },
   ];
 
@@ -205,7 +258,7 @@ export function OnChainYields() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {categories.map(({ key, title, description, icon: Icon, color, bgColor }) => (
+        {categories.map(({ key, title, description, icon: Icon, color, bgColor, showAster }) => (
           <Card key={key} className="bg-card/50 backdrop-blur border-border/50">
             <CardHeader className="pb-2">
               <div className="flex items-center gap-2">
@@ -223,18 +276,17 @@ export function OnChainYields() {
                 pools={data?.pools[key] || []} 
                 isLoading={isLoading}
                 emptyMessage={t('noYieldsFound')}
+                asterData={showAster ? asterData : null}
+                asterLoading={asterLoading}
               />
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Aster asBNB - Stable Category Highlight */}
-      <AsterBacking />
-
       {data?.lastUpdated && (
         <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
-          <span>{t('dataSource')}: DefiLlama</span>
+          <span>{t('dataSource')}: DefiLlama + NodeReal</span>
           <ExternalLink className="h-3 w-3" />
         </div>
       )}
