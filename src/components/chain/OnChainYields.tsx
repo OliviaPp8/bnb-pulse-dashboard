@@ -64,7 +64,7 @@ interface YieldTableProps {
   pools: YieldPool[];
   isLoading: boolean;
   emptyMessage: string;
-  asterData?: { tvlUsd: number } | null;
+  asterData?: { totalTvlUsd: number } | null;
   asterLoading?: boolean;
 }
 
@@ -141,7 +141,7 @@ function YieldTable({ pools, isLoading, emptyMessage, asterData, asterLoading }:
             </TableCell>
             <TableCell className="py-2 text-right hidden sm:table-cell">
               <span className="text-sm text-chart-yellow font-mono font-semibold">
-                {formatTvl(asterData.tvlUsd)}
+                {formatTvl(asterData.totalTvlUsd)}
               </span>
             </TableCell>
           </TableRow>
