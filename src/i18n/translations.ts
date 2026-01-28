@@ -115,10 +115,45 @@ export const translations = {
     switzerland: "Switzerland",
     active: "Active",
     inactive: "Inactive",
+    monitoring: "Monitoring",
     lastSeen: "Last Seen",
     sovereignLocking: "Sovereign Lock Ratio",
     ofCirculating: "of circulating supply",
     totalSovereignLocked: "Total Sovereign Locked",
+    
+    // Sovereign Support Types
+    explicitSupport: "Explicit Support",
+    implicitSupport: "Implicit Support",
+    theIronCore: "The Iron Core",
+    shadowBackers: "Shadow Backers",
+    explicitSupportDesc: "National-level allies through regulatory endorsement & ecosystem investment",
+    implicitSupportDesc: "Capital penetration through VC LP investments & infrastructure",
+    
+    // Support Levels
+    strategic: "Strategic",
+    infrastructure: "Infrastructure",
+    indirect: "Indirect",
+    
+    // Fund Names
+    mubadalaAdq: "Mubadala & ADQ",
+    kazakhstanFund: "National Fund of Kazakhstan",
+    mumtalakat: "Mumtalakat",
+    vertexVentures: "Vertex Ventures (Temasek-linked)",
+    soeFunds: "SOE-linked Funds",
+    
+    // Nature Keys
+    strategicInvestment: "Strategic Investment & Incubation",
+    techInfrastructure: "Technology & Infrastructure",
+    regulatorySandbox: "Regulatory Sandbox Support",
+    lpInvestment: "LP Investment in Crypto VCs",
+    computingStorage: "Computing & Storage Support",
+    
+    // Description Keys
+    uaeDescription: "Abu Dhabi sovereign capital is the cornerstone of BNB Chain's Middle East compliance architecture.",
+    kazakhstanDescription: "National-level CBDC technology partner (Digital Tenge bridge testing).",
+    bahrainDescription: "First Gulf nation to grant full Binance license; supports BNB payment network via fintech subsidiaries.",
+    singaporeDescription: "Indirect BNB exposure through DeFi infrastructure investments on BNB Chain.",
+    hongkongDescription: "Participating in Greenfield node construction via HK Web3 compliance channels.",
     
     // Loading states
     loading: "Loading",
@@ -262,12 +297,47 @@ export const translations = {
     abuDhabi: "阿布扎比",
     singapore: "新加坡",
     switzerland: "瑞士",
-    active: "在线",
+    active: "活跃",
     inactive: "离线",
+    monitoring: "监测中",
     lastSeen: "最后活跃",
     sovereignLocking: "主权锁仓比例",
     ofCirculating: "占流通量",
     totalSovereignLocked: "主权锁仓总量",
+    
+    // Sovereign Support Types
+    explicitSupport: "显性支持",
+    implicitSupport: "隐性支持",
+    theIronCore: "铁核阵营",
+    shadowBackers: "影子金主",
+    explicitSupportDesc: "通过监管背书与生态投资建立的国家级盟友",
+    implicitSupportDesc: "通过风投LP投资与基础设施渗透的资本布局",
+    
+    // Support Levels
+    strategic: "战略级",
+    infrastructure: "基础设施",
+    indirect: "间接",
+    
+    // Fund Names
+    mubadalaAdq: "穆巴达拉 & ADQ",
+    kazakhstanFund: "哈萨克斯坦国家基金",
+    mumtalakat: "穆塔拉卡特",
+    vertexVentures: "祥峰投资 (淡马锡系)",
+    soeFunds: "国资背景基金",
+    
+    // Nature Keys
+    strategicInvestment: "战略投资与孵化",
+    techInfrastructure: "技术与基础设施",
+    regulatorySandbox: "监管沙盒支持",
+    lpInvestment: "加密风投LP投资",
+    computingStorage: "算力与存储支持",
+    
+    // Description Keys
+    uaeDescription: "阿布扎比主权资本是 BNB Chain 中东合规架构的核心基石。",
+    kazakhstanDescription: "国家级 CBDC 技术合作伙伴（数字坚戈桥接测试）。",
+    bahrainDescription: "海湾地区首个授予币安全牌照的国家；通过金融科技子公司支持 BNB 支付网络落地。",
+    singaporeDescription: "通过 BNB Chain 上的 DeFi 基础设施投资间接持有 BNB 敞口。",
+    hongkongDescription: "通过香港 Web3 合规通道参与 Greenfield（存储链）节点建设。",
     
     // Loading states
     loading: "加载中",
